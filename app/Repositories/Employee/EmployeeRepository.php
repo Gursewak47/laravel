@@ -3,7 +3,7 @@
 namespace App\Repositories\Employee;
 
 use App\DTO\EmployeeData;
-use App\Models\Employee\Employee;
+use App\Models\Employee;
 
 class EmployeeRepository
 {

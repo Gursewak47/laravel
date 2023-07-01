@@ -36,7 +36,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $storeUserRequest)
     {
-        return $this->userRepository->storeUser(UserData::from($storeUserRequest->validated()));
+        return $this->userRepository->storeUser($storeUserRequest->validated());
     }
 
     /**

@@ -21,7 +21,7 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name'=>[
                 'required',
                 'string',
@@ -36,5 +36,20 @@ class StoreUserRequest extends FormRequest
                 'required',
             ],
         ];
+        $postRulesPrefix = 'posts.*.';
+
+        $postRules  = [
+            $postRulesPrefix . 'id' => [
+                'nullable',
+                'numeric'
+            ],
+            $postRulesPrefix . 'tittle' => [
+                'required',
+                'string'
+            ],
+        ];
+
+
+        return (collect($rules)->merge(collect($postRules)))->toArray();
     }
 }

@@ -6,7 +6,7 @@ use App\DTO\EmployeeData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
-use App\Models\Employee\Employee;
+use App\Models\Employee;
 use App\Repositories\Employee\EmployeeRepository;
 
 class EmployeeController extends Controller

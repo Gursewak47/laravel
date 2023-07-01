@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\DTO\UserData;
 use App\Models\User;
+use App\Repositories\Post\PostRepository;
 use Illuminate\Database\Eloquent\InvalidCastException;
 use Illuminate\Database\Eloquent\MassAssignmentException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -30,15 +31,18 @@ class UserRepository
      * @throws InvalidArgumentException
      * @throws InvalidCastException
      */
-    public function storeUser(UserData $userData): User
+    public function storeUser(array $request): User
     {
-        $user =new User();
-        $user->fill($userData->toArray());
-        $user->password = bcrypt($userData->toArray()['password']);
-        $user->save();
-        return $user;
+        $user = User::create($request);
+        $this->saveChildRecords($user, $request);
+        $user->password = bcrypt('password');
+        return $user->load('posts');
     }
 
+    public function saveChildRecords($user, array $request)
+    {
+        (new PostRepository())->storePost($user, $request['posts']);
+    }
     /**
      * @param User $user
      * @param UserData $userData

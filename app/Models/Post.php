@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Post;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +17,7 @@ class Post extends Model
         'tittle',
     ];
     protected $casts = [
+        'id' => 'integer',
         'user_id' => 'integer',
         'tittle' => 'string',
     ];

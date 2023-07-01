@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Employee;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +20,7 @@ class Employee extends Model
         'address',
     ];
     protected $casts = [
+        'id' => 'integer',
         'first_name' => 'string',
         'last_name' => 'string',
         'email' => 'string',

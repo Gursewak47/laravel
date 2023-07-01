@@ -2,7 +2,8 @@
 
 namespace App\Repositories\Post;
 
-use App\Models\Post\Post;
+use App\Models\Post;
+use App\Models\User;
 
 class PostRepository
 {
@@ -12,8 +13,21 @@ class PostRepository
     }
 
 
-    public function storePost()
+    public function storePost($user, array $request)
     {
+        $posts = collect();
+        if (! is_null($request)) {
+            foreach ($request as $postRequest) {
+                $post = new Post();
+                if (!is_null(@$postRequest['id'])) {
+                    $post = Post::findOrFail($postRequest['id']);
+                }
+                $post->fill($postRequest);
+                $post->user()->associate($user);
+                $post->save();
+                $posts->push($post);
+            }
+        }
     }
 
 
