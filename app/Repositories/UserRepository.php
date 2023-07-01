@@ -49,9 +49,13 @@ class UserRepository
      * @return User
      * @throws MassAssignmentException
      */
-    public function updateUser(User $user, UserData $userData): User
+    public function updateUser(User $user, array $request): User
     {
-        $user->fill($userData->toArray());
+        if (is_int($user)) {
+            $user = $this->getUserById($user);
+        }
+        $user->fill($request);
+        $this->saveChildRecords($user, $request);
         $user->update();
         return $user;
     }

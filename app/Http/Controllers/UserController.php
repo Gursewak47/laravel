@@ -46,8 +46,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $updateUserRequest, int $id)
     {
-        $user = $this->userRepository->getUserById($id);
-        return $this->userRepository->updateUser($user, UserData::from(array_merge($user->toArray(), $updateUserRequest->validated())));
+        return $this->userRepository->updateUser($this->userRepository->getUserById($id), $updateUserRequest->validated());
     }
 
     /**

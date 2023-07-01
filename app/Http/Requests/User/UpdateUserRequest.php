@@ -21,13 +21,26 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name'=>[
                 'required',
                 'string',
                 'min:6',
                 'max:255',
             ],
+            'email'=>[
+                'nullable',
+                'email',
+            ],
         ];
+        $postRulesPrefix = 'posts.*.';
+
+        $postRules  = [
+            $postRulesPrefix . 'tittle' => [
+                'nullable',
+                'string'
+            ],
+        ];
+        return (collect($rules)->merge(collect($postRules)))->toArray();
     }
 }
