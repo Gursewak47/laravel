@@ -13,18 +13,25 @@ class EmployeeRepository
     }
 
 
-    public function storeEmployee(EmployeeData $employeeData): Employee
+    public function storeEmployee(array $request): Employee
     {
-        $employee =new Employee();
-        $employee->fill($employeeData->toArray());
-        $employee->save();
-        return $employee;
+        $employee = Employee::create($request);
+        $this->saveChildRecords($employee, $request);
+        return $employee->load('employee_bank_accounts');
     }
 
-
-    public function updateEmployee(Employee $employee, EmployeeData $employeeData): Employee
+    public function saveChildRecords($employee, array $request)
     {
-        $employee->fill($employeeData->toArray());
+        (new EmployeeBankAccountRepository())->storeEmployeeBankAccount($employee, $request['employee_bank_accounts']);
+    }
+
+    public function updateEmployee(Employee $employee, array $request): Employee
+    {
+        if (is_int($employee)) {
+            $employee = $this->getEmployeeById($employee);
+        }
+        $employee->fill($request);
+        $this->saveChildRecords($employee, $request);
         $employee->update();
         return $employee;
     }

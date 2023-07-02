@@ -21,33 +21,52 @@ class StoreEmployeeRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'first_name'=>[
+        $rules = [
+            'first_name' => [
                 'required',
                 'string',
                 'max:255',
             ],
-            'last_name'=>[
+            'last_name' => [
                 'required',
                 'string',
                 'max:255',
             ],
-            'email'=>[
+            'email' => [
                 'required',
                 'email',
             ],
-            'salary'=>[
+            'salary' => [
                 'required',
                 'numeric',
             ],
-            'phone'=>[
+            'phone' => [
                 'required',
                 'string',
                 'max:24',
             ],
-            'address'=>[
+            'address' => [
                 'string',
             ],
         ];
+        $employeeBankAccountPrefix = 'employee_bank_accounts.*.';
+
+        $employeeBankAccountRules  = [
+            $employeeBankAccountPrefix . 'account_name' => [
+                'required',
+                'string'
+            ],
+            $employeeBankAccountPrefix . 'code' => [
+                'required',
+                'string'
+            ],
+            $employeeBankAccountPrefix . 'account_number' => [
+                'required',
+                'string'
+            ],
+        ];
+
+
+        return (collect($rules)->merge(collect($employeeBankAccountRules)))->toArray();
     }
 }

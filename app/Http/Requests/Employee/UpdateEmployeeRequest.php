@@ -21,20 +21,52 @@ class UpdateEmployeeRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
+            'first_name' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+            'last_name' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
             'email'=>[
-                'required',
+                'nullable',
                 'email',
             ],
             'salary'=>[
+                'nullable',
                 'numeric',
             ],
             'phone'=>[
+                'nullable',
                 'string',
             ],
             'address'=>[
+                'nullable',
                 'string',
             ],
         ];
+        $employeeBankAccountPrefix = 'employee_bank_accounts.*.';
+
+        $employeeBankAccountRules  = [
+            $employeeBankAccountPrefix . 'account_name' => [
+                'nullable',
+                'string'
+            ],
+            $employeeBankAccountPrefix . 'code' => [
+                'nullable',
+                'string'
+            ],
+            $employeeBankAccountPrefix . 'account_number' => [
+                'nullable',
+                'string'
+            ],
+        ];
+
+
+        return (collect($rules)->merge(collect($employeeBankAccountRules)))->toArray();
     }
 }

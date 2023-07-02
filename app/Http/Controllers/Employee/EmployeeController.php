@@ -30,14 +30,14 @@ class EmployeeController extends Controller
 
     public function store(StoreEmployeeRequest $storeEmployeeRequest)
     {
-        return $this->employeeRepository->storeEmployee(EmployeeData::from($storeEmployeeRequest->validated()));
+        return $this->employeeRepository->storeEmployee($storeEmployeeRequest->validated());
     }
 
 
     public function update(UpdateEmployeeRequest $updateEmployeeRequest, int $id)
     {
         $user = $this->employeeRepository->getEmployeeById($id);
-        return $this->employeeRepository->updateEmployee($user, EmployeeData::from(array_merge($user->toArray(), $updateEmployeeRequest->validated())));
+        return $this->employeeRepository->updateEmployee($user, $updateEmployeeRequest->validated());
     }
 
     /**

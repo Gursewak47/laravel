@@ -43,6 +43,7 @@ class UserRepository
     {
         (new PostRepository())->storePost($user, $request['posts']);
     }
+
     /**
      * @param User $user
      * @param UserData $userData

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
@@ -33,4 +34,10 @@ class Employee extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    /** @return HasMany  */
+    public function employeeBankAccounts(): HasMany
+    {
+        return $this->hasMany(EmployeeBankAccount::class);
+    }
 }

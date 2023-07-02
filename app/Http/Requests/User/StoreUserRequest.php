@@ -39,10 +39,6 @@ class StoreUserRequest extends FormRequest
         $postRulesPrefix = 'posts.*.';
 
         $postRules  = [
-            $postRulesPrefix . 'id' => [
-                'nullable',
-                'numeric'
-            ],
             $postRulesPrefix . 'tittle' => [
                 'required',
                 'string'
