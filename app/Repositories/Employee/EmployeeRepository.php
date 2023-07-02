@@ -17,12 +17,13 @@ class EmployeeRepository
     {
         $employee = Employee::create($request);
         $this->saveChildRecords($employee, $request);
-        return $employee->load('employee_bank_accounts');
+        return $employee->load('employee_bank_accounts', 'employee_social_accounts');
     }
 
     public function saveChildRecords($employee, array $request)
     {
         (new EmployeeBankAccountRepository())->storeEmployeeBankAccount($employee, $request['employee_bank_accounts']);
+        (new EmployeeSocialAccountRepository())->storeEmployeeSocialAccount($employee, $request['employee_social_accounts']);
     }
 
     public function updateEmployee(Employee $employee, array $request): Employee

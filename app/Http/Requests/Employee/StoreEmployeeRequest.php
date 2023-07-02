@@ -65,8 +65,20 @@ class StoreEmployeeRequest extends FormRequest
                 'string'
             ],
         ];
+        $employeeSocialAccountPrefix = 'employee_social_accounts.*.';
+
+        $employeeSocialAccountRules  = [
+            $employeeSocialAccountPrefix . 'account' => [
+                'required',
+                'string'
+            ],
+            $employeeSocialAccountPrefix . 'type' => [
+                'required',
+                'string'
+            ],
+        ];
 
 
-        return (collect($rules)->merge(collect($employeeBankAccountRules)))->toArray();
+        return (collect($rules)->merge(collect($employeeBankAccountRules))->merge(collect($employeeSocialAccountRules)))->toArray();
     }
 }

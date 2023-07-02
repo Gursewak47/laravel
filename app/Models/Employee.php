@@ -40,4 +40,10 @@ class Employee extends Model
     {
         return $this->hasMany(EmployeeBankAccount::class);
     }
+
+    /** @return HasMany  */
+    public function employeeSocialAccounts(): HasMany
+    {
+        return $this->hasMany(EmployeeSocialAccount::class);
+    }
 }
