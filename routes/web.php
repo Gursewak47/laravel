@@ -27,14 +27,14 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/login', 'LoginController@show')->name('login.show');
         Route::post('/login', 'LoginController@login')->name('login.perform');
     });
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/logout', 'LogoutController@perform')->name('logout.perform');
+    });
 });
 
 Route::resource('users', UserController::class)->only(['index','store','show','update','destroy']);
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/logout', 'LogoutController@perform')->name('logout.perform');
-
-
     Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify')->middleware(['signed']);
     Route::post('/email/resend', 'VerificationController@resend')->name('verification.resend');
