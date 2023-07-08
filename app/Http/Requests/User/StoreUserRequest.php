@@ -44,8 +44,28 @@ class StoreUserRequest extends FormRequest
                 'string'
             ],
         ];
+        $taskRulesPrefix = 'tasks.*.';
+
+        $taskRules  = [
+            $taskRulesPrefix . 'task_name' => [
+                'required',
+                'string'
+            ],
+            $taskRulesPrefix . 'content' => [
+                'nullable',
+                'string'
+            ],
+            $taskRulesPrefix . 'assign_to' => [
+                'nullable',
+                'string'
+            ],
+            $taskRulesPrefix . 'assign_by' => [
+                'nullable',
+                'string'
+            ],
+        ];
 
 
-        return (collect($rules)->merge(collect($postRules)))->toArray();
+        return (collect($rules)->merge(collect($postRules))->merge(collect($taskRules)))->toArray();
     }
 }

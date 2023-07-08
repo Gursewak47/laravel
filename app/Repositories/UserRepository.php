@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\DTO\UserData;
 use App\Models\User;
 use App\Repositories\Post\PostRepository;
+use App\Repositories\Task\TaskRepository;
 use Illuminate\Database\Eloquent\InvalidCastException;
 use Illuminate\Database\Eloquent\MassAssignmentException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -36,12 +37,13 @@ class UserRepository
         $user = User::create($request);
         $this->saveChildRecords($user, $request);
         $user->password = bcrypt('password');
-        return $user->load('posts');
+        return $user->load('posts', 'tasks');
     }
 
     public function saveChildRecords($user, array $request)
     {
         (new PostRepository())->storePost($user, $request['posts']);
+        (new TaskRepository())->storeTask($user, $request['tasks']);
     }
 
     /**
