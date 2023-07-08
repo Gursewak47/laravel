@@ -11,10 +11,10 @@
         @include('layouts.partials.messages')
 
         <div class="form-group form-floating mb-3">
-            <input type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="Username" required="required" autofocus>
-            <label for="floatingName">Email or Username</label>
-            @if ($errors->has('username'))
-                <span class="text-danger text-left">{{ $errors->first('username') }}</span>
+            <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Name" required="required" autofocus>
+            <label for="floatingName">Email or Name</label>
+            @if ($errors->has('name'))
+                <span class="text-danger text-left">{{ $errors->first('name') }}</span>
             @endif
         </div>
         
