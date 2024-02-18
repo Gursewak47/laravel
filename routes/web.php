@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HotelController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/', function () {
+    return to_route('hotels.index');
+});
+
+Route::resource('hotels', HotelController::class)->only([
+    'index', 'create',
+]);
+
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::get('/', 'HomeController@index')->name('home.index');
 
@@ -33,7 +43,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     });
 });
 
-Route::resource('users', UserController::class)->only(['index','store','show','update','destroy']);
+Route::resource('users', UserController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');
@@ -41,13 +51,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/email/resend', 'VerificationController@resend')->name('verification.resend');
 });
 
-
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['verified']], function () {
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
     });
 });
-
 
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
